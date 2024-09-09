@@ -17,14 +17,14 @@ builder.Services.AddSwaggerGen();
 var configuration = builder.Configuration;
 
 // ----- Azure Production -----
-var azureConnectionString = Environment.GetEnvironmentVariable("AzureSQLConnection");
+//var azureConnectionString = Environment.GetEnvironmentVariable("AzureSQLConnection");
 
-builder.Services.AddDbContext<TaskHive_UserService.AppDbContext>( options =>
-    options.UseSqlServer(azureConnectionString));
+//builder.Services.AddDbContext<TaskHive_UserService.AppDbContext>( options =>
+//    options.UseSqlServer(azureConnectionString));
 
 // ----- Local Development -----
-//builder.Services.AddDbContext<TaskHive_UserService.AppDbContext>(options =>
-//    options.UseSqlServer(configuration.GetConnectionString("AzureSQLConnection")));
+builder.Services.AddDbContext<TaskHive_UserService.AppDbContext>(options =>
+    options.UseSqlServer(configuration.GetConnectionString("AzureSQLConnection")));
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
