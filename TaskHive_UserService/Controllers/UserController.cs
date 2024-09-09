@@ -111,6 +111,7 @@ namespace UserMicroservice.Controllers
         [HttpPost("add-user-profile")]
         public IActionResult AddUserProfile([FromForm] UserProfileDataModel userProfile)
         {
+            Console.WriteLine("AddUserProfile request received.");
             var result = _userService.AddUserProfile(userProfile);
 
             if (result != null)
