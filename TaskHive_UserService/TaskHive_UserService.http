@@ -1,0 +1,6 @@
+@TaskHive_UserService_HostAddress = http://localhost:5276
+
+GET {{TaskHive_UserService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
