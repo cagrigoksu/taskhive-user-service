@@ -30,7 +30,7 @@ namespace UserMicroservice.Controllers
             Console.WriteLine("Login request received.");
             
             // get user
-            var user = await _userService.GetUserAsync(loginModel.Email);
+            var user = await _userService.GetUserByEmailAsync(loginModel.Email);
 
             if (user != null)
             {
@@ -79,7 +79,7 @@ namespace UserMicroservice.Controllers
                     // save user
                     _userService.AddUser(user);
 
-                    var userResult = await _userService.GetUserAsync(user.Email);
+                    var userResult = await _userService.GetUserByEmailAsync(user.Email);
 
                     if (userResult != null)
                     {
@@ -95,11 +95,11 @@ namespace UserMicroservice.Controllers
             return BadRequest();
         }
 
-        [HttpGet("get-user-by-email")]
+        [HttpGet("getUserByEmail/{email}")]
         public async Task<IActionResult> GetUserByEmail([FromForm] string email)
         {
             Console.WriteLine("GetUserByEmail request received.");
-            var result = await _userService.GetUserAsync(email);
+            var result = await _userService.GetUserByEmailAsync(email);
 
             if (result != null)
             {
@@ -108,43 +108,43 @@ namespace UserMicroservice.Controllers
             return BadRequest();
         }
 
-        [HttpPost("add-user-profile")]
-        public IActionResult AddUserProfile([FromForm] UserProfileDataModel userProfile)
+        [HttpPost("addUserProfile")]
+        public async Task<IActionResult> AddUserProfile([FromForm] UserProfileDataModel userProfile)
         {
             Console.WriteLine("AddUserProfile request received.");
-            var result = _userService.AddUserProfile(userProfile);
+            var result = await _userService.AddUserProfile(userProfile);
 
             if (result != null)
             {
-                return Ok();
+                return Ok(result);
             }
             return BadRequest();
         }
 
-        [HttpGet("get-user-profile/{userId}")]
-        public async Task<IActionResult> GetUserProfileAsync(int userId)
-        {
-            var user = await _userService.GetUserProfileAsync(userId);
+        // [HttpGet("getUserProfileByIdAsync/{userId}")]
+        // public async Task<IActionResult> GetUserProfileByIdAsync(int userId)
+        // {
+        //     var user = await _userService.GetUserProfileByIdAsync(userId);
 
-            if (user == null)
-            {
-                return BadRequest();
-            }
+        //     if (user == null)
+        //     {
+        //         return BadRequest();
+        //     }
 
-            return Ok(user);
-        }
+        //     return Ok(user);
+        // }
 
-        [HttpPost("edit-user-profile")]
-        public IActionResult EditUserProfileAsync([FromForm] UserProfileDataModel userProfile)
-        {
-            var result = _userService.EditUserProfile(userProfile);
+        // [HttpPost("edit-user-profile")]
+        // public IActionResult EditUserProfileAsync([FromForm] UserProfileDataModel userProfile)
+        // {
+        //     var result = _userService.EditUserProfile(userProfile);
 
-            if (result != null)
-            {
-                return Ok();
-            }
-            return BadRequest();
-        }
+        //     if (result != null)
+        //     {
+        //         return Ok();
+        //     }
+        //     return BadRequest();
+        // }
 
         
 

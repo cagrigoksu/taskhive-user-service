@@ -5,12 +5,12 @@ namespace TaskHive_UserService.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<UserDataModel> GetUserAsync(string email);
+        Task<UserDataModel> GetUserByEmailAsync(string email);
         Task<bool> IsUserExistAsync(string email);
-        Task<UserProfileDataModel> GetUserProfileAsync(int userId);
+        Task<UserProfileDataModel> GetUserProfileByIdAsync(int userId);
         void AddUser(UserDataModel user);
-        StatusCodeResult AddUserProfile(UserProfileDataModel profile);
-        StatusCodeResult EditUserProfile(UserProfileDataModel userProfile);
-        void DeleteUser(int id);
+        Task<UserProfileDataModel> AddUserProfile(UserProfileDataModel profile);
+        // StatusCodeResult EditUserProfile(UserProfileDataModel userProfile);
+        // void DeleteUser(int id);
     }
 }

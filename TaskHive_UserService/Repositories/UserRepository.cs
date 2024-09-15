@@ -14,16 +14,23 @@ namespace TaskHive_UserService.Repositories
             _db = db;
         }
 
-        public async Task<UserDataModel> GetUserAsync(string email)
+        public async Task<UserDataModel> GetUserByEmailAsync(string email)
         {
             var user = _db.Users.FirstOrDefaultAsync(x => x.Email == email && x.IsDeleted == false);
 
             return await user;
         }
 
-        public async Task<UserProfileDataModel> GetUserProfileAsync(int userId)
+        public async Task<UserProfileDataModel> GetUserProfileByIdAsync(int userId)
         {
             var profile = _db.UserProfiles.FirstOrDefaultAsync(x => x.UserId == userId && x.IsDeleted == false);
+
+            return await profile;
+        }
+
+        public async Task<UserProfileDataModel> GetUserProfileByEmailAsync(string userEmail)
+        {
+            var profile = _db.UserProfiles.FirstOrDefaultAsync(x => x.Email == userEmail && x.IsDeleted == false);
 
             return await profile;
         }
@@ -35,24 +42,33 @@ namespace TaskHive_UserService.Repositories
             _db.SaveChanges();
         }
 
-        public StatusCodeResult AddUserProfile(UserProfileDataModel userProfile)
+        public async Task<UserProfileDataModel> AddUserProfile(UserProfileDataModel userProfile)
         {
             try
-            {
-                userProfile.LastEditDate = DateTime.Now;
+            {   
+                // get user id
+                var user = await GetUserByEmailAsync(userProfile.Email);
+                userProfile.UserId = user.Id;
+                
+                userProfile.CreateDate = DateTime.Now;
+                userProfile.LastUpdateDate = DateTime.Now;
                 _db.Add(userProfile);
                 _db.SaveChanges();
-                return new StatusCodeResult(200);
+
+                // return saved data
+                userProfile = await GetUserProfileByEmailAsync(userProfile.Email);
+                
+                return userProfile;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return new StatusCodeResult(400);
+                return null;
             }
 
         }
 
-        public StatusCodeResult EditUserProfile(UserProfileDataModel userProfile)
+       /*  public StatusCodeResult EditUserProfile(UserProfileDataModel userProfile)
         {
             try
             {
@@ -77,9 +93,9 @@ namespace TaskHive_UserService.Repositories
                 Console.WriteLine(e);
                 return new StatusCodeResult(400);
             }
-        }
+        } */
 
-        public async void DeleteUserAsync(int id)
+/*         public async void DeleteUserAsync(int id)
         {
             var user = await _db.Users.FindAsync(id);
 
@@ -89,7 +105,7 @@ namespace TaskHive_UserService.Repositories
 
             _db.Update(user);
             _db.SaveChanges();
-        }
+        } */
 
         public async Task<bool> IsUserExistAsync(string email)
         {

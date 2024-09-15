@@ -14,9 +14,9 @@ namespace TaskHive_UserService.Services
             _userRepository = userRepository;
         }
 
-        public async Task<UserDataModel> GetUserAsync(string email)
+        public async Task<UserDataModel> GetUserByEmailAsync(string email)
         {
-            var user = await _userRepository.GetUserAsync(email);
+            var user = await _userRepository.GetUserByEmailAsync(email);
 
             return user;
         }
@@ -26,9 +26,9 @@ namespace TaskHive_UserService.Services
             return await _userRepository.IsUserExistAsync(email);
         }
 
-        public async Task<UserProfileDataModel> GetUserProfileAsync(int userId)
+        public async Task<UserProfileDataModel> GetUserProfileByIdAsync(int userId)
         {
-            var user = await _userRepository.GetUserProfileAsync(userId);
+            var user = await _userRepository.GetUserProfileByIdAsync(userId);
 
             return user;
         }
@@ -38,23 +38,23 @@ namespace TaskHive_UserService.Services
             _userRepository.AddUser(user);
         }
 
-        public StatusCodeResult AddUserProfile(UserProfileDataModel profile)
+        public async Task<UserProfileDataModel> AddUserProfile(UserProfileDataModel profile)
         {
-            var result = _userRepository.AddUserProfile(profile);
+            var result = await _userRepository.AddUserProfile(profile);
             return result;
         }
 
-        public StatusCodeResult EditUserProfile(UserProfileDataModel userProfile)
-        {
-            var result = _userRepository.EditUserProfile(userProfile);
+        // public StatusCodeResult EditUserProfile(UserProfileDataModel userProfile)
+        // {
+        //     var result = _userRepository.EditUserProfile(userProfile);
 
-            return result;
+        //     return result;
 
-        }
+        // }
 
-        public void DeleteUser(int id)
-        {
-            _userRepository.DeleteUserAsync(id);
-        }
+        // public void DeleteUser(int id)
+        // {
+        //     _userRepository.DeleteUserAsync(id);
+        // }
     }
 }
