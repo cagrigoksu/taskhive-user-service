@@ -24,7 +24,7 @@ var configuration = builder.Configuration;
 
 // ----- Local Development -----
 builder.Services.AddDbContext<TaskHive_UserService.AppDbContext>(options =>
-    options.UseSqlServer(configuration.GetConnectionString("AzureSQLConnection")));
+    options.UseSqlServer(configuration.GetConnectionString("DockerSQLConnection")));
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
