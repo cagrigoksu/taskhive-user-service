@@ -133,18 +133,18 @@ namespace UserMicroservice.Controllers
             return BadRequest();
         }
 
-        // [HttpGet("getUserProfileByIdAsync/{userId}")]
-        // public async Task<IActionResult> GetUserProfileByIdAsync(int userId)
-        // {
-        //     var user = await _userService.GetUserProfileByIdAsync(userId);
+        [HttpGet("getUserProfileByUserId/{userId}")]
+        public async Task<IActionResult> GetUserProfileByUserIdAsync(int userId)
+        {
+            var userProfile = await _userService.GetUserProfileByUserIdAsync(userId);
 
-        //     if (user == null)
-        //     {
-        //         return BadRequest();
-        //     }
+            if (userProfile == null)
+            {
+                return BadRequest();
+            }
 
-        //     return Ok(user);
-        // }       
+            return Ok(userProfile);
+        }       
 
     }
 }

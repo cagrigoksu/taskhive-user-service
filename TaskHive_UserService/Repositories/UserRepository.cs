@@ -21,7 +21,7 @@ namespace TaskHive_UserService.Repositories
             return await user;
         }
 
-        public async Task<UserProfileDataModel> GetUserProfileByIdAsync(int userId)
+        public async Task<UserProfileDataModel> GetUserProfileByUserIdAsync(int userId)
         {
             var profile = _db.UserProfiles.FirstOrDefaultAsync(x => x.UserId == userId && x.IsDeleted == false);
 
@@ -97,18 +97,6 @@ namespace TaskHive_UserService.Repositories
                 return null;
             }
         } 
-
-/*         public async void DeleteUserAsync(int id)
-        {
-            var user = await _db.Users.FindAsync(id);
-
-            user.IsDeleted = true;
-            user.DeleteUser = Globals.UserId;
-            user.DeleteDate = DateTime.Now;
-
-            _db.Update(user);
-            _db.SaveChanges();
-        } */
 
         public async Task<bool> IsUserExistAsync(string email)
         {

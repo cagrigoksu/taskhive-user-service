@@ -26,9 +26,9 @@ namespace TaskHive_UserService.Services
             return await _userRepository.IsUserExistAsync(email);
         }
 
-        public async Task<UserProfileDataModel> GetUserProfileByIdAsync(int userId)
+        public async Task<UserProfileDataModel> GetUserProfileByUserIdAsync(int userId)
         {
-            var user = await _userRepository.GetUserProfileByIdAsync(userId);
+            var user = await _userRepository.GetUserProfileByUserIdAsync(userId);
 
             return user;
         }
@@ -49,10 +49,5 @@ namespace TaskHive_UserService.Services
             var result = await _userRepository.EditUserProfile(userProfile);
             return result;
         }
-
-        // public void DeleteUser(int id)
-        // {
-        //     _userRepository.DeleteUserAsync(id);
-        // }
     }
 }
