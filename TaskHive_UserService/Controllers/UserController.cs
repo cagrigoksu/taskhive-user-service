@@ -109,10 +109,22 @@ namespace UserMicroservice.Controllers
         }
 
         [HttpPost("addUserProfile")]
-        public async Task<IActionResult> AddUserProfile([FromForm] UserProfileDataModel userProfile)
+        public async Task<IActionResult> AddUserProfileAsync([FromForm] UserProfileDataModel userProfile)
         {
             Console.WriteLine("AddUserProfile request received.");
             var result = await _userService.AddUserProfile(userProfile);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+
+        [HttpPost("editUserProfile")]
+        public async Task<IActionResult> EditUserProfileAsync([FromForm] UserProfileDataModel userProfile)
+        {
+            var result = await _userService.EditUserProfile(userProfile);
 
             if (result != null)
             {
@@ -132,21 +144,7 @@ namespace UserMicroservice.Controllers
         //     }
 
         //     return Ok(user);
-        // }
-
-        // [HttpPost("edit-user-profile")]
-        // public IActionResult EditUserProfileAsync([FromForm] UserProfileDataModel userProfile)
-        // {
-        //     var result = _userService.EditUserProfile(userProfile);
-
-        //     if (result != null)
-        //     {
-        //         return Ok();
-        //     }
-        //     return BadRequest();
-        // }
-
-        
+        // }       
 
     }
 }

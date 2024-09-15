@@ -44,13 +44,11 @@ namespace TaskHive_UserService.Services
             return result;
         }
 
-        // public StatusCodeResult EditUserProfile(UserProfileDataModel userProfile)
-        // {
-        //     var result = _userRepository.EditUserProfile(userProfile);
-
-        //     return result;
-
-        // }
+        public async Task<UserProfileDataModel> EditUserProfile(UserProfileDataModel userProfile)
+        {
+            var result = await _userRepository.EditUserProfile(userProfile);
+            return result;
+        }
 
         // public void DeleteUser(int id)
         // {

@@ -68,10 +68,11 @@ namespace TaskHive_UserService.Repositories
 
         }
 
-       /*  public StatusCodeResult EditUserProfile(UserProfileDataModel userProfile)
+       public async Task<UserProfileDataModel> EditUserProfile(UserProfileDataModel userProfile)
         {
             try
             {
+                // get current record on db
                 var data = _db.UserProfiles.First(x => x.UserId == userProfile.UserId);
 
                 if (data != null)
@@ -80,20 +81,22 @@ namespace TaskHive_UserService.Repositories
                     data.Surname = userProfile.Surname;
                     data.PhoneNumber = userProfile.PhoneNumber;
                     data.Email = userProfile.Email;
-                    data.LastEditDate = DateTime.Now;
+                    data.Department = userProfile.Department;
+                    data.Role = userProfile.Role;
+                    data.LastUpdateDate = DateTime.Now;
 
                     _db.Update(data);
                     _db.SaveChanges();
                 }
 
-                return new StatusCodeResult(200);
+                return data;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return new StatusCodeResult(400);
+                return null;
             }
-        } */
+        } 
 
 /*         public async void DeleteUserAsync(int id)
         {

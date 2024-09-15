@@ -10,7 +10,7 @@ namespace TaskHive_UserService.Services.Interfaces
         Task<UserProfileDataModel> GetUserProfileByIdAsync(int userId);
         void AddUser(UserDataModel user);
         Task<UserProfileDataModel> AddUserProfile(UserProfileDataModel profile);
-        // StatusCodeResult EditUserProfile(UserProfileDataModel userProfile);
+        Task<UserProfileDataModel> EditUserProfile(UserProfileDataModel userProfile);
         // void DeleteUser(int id);
     }
 }
