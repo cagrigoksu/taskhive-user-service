@@ -7,11 +7,14 @@ namespace TaskHive_UserService.Models
         [Key]
         public int Id { get; set; }
         public int UserId { get; set; }
-        public string Name { get; set; } = null!;
-        public string Surname { get; set; } = null!;
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public DateTime LastEditDate { get; set; }
+        public required string Name { get; set; }
+        public required string Surname { get; set; } 
+        public required string Email { get; set; }
+        public required string PhoneNumber { get; set; }
+        public required string Department { get; set; }
+        public required string Role { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime LastUpdateDate { get; set; }
         public bool IsDeleted { get; set; } = false;
         public DateTime? DeleteDate { get; set; }
         public int DeleteUser { get; set; }
