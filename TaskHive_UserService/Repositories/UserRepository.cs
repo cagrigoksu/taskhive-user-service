@@ -14,16 +14,23 @@ namespace TaskHive_UserService.Repositories
             _db = db;
         }
 
-        public async Task<UserDataModel> GetUserAsync(string email)
+        public async Task<UserDataModel> GetUserByEmailAsync(string email)
         {
             var user = _db.Users.FirstOrDefaultAsync(x => x.Email == email && x.IsDeleted == false);
 
             return await user;
         }
 
-        public async Task<UserProfileDataModel> GetUserProfileAsync(int userId)
+        public async Task<UserProfileDataModel> GetUserProfileByUserIdAsync(int userId)
         {
             var profile = _db.UserProfiles.FirstOrDefaultAsync(x => x.UserId == userId && x.IsDeleted == false);
+
+            return await profile;
+        }
+
+        public async Task<UserProfileDataModel> GetUserProfileByEmailAsync(string userEmail)
+        {
+            var profile = _db.UserProfiles.FirstOrDefaultAsync(x => x.Email == userEmail && x.IsDeleted == false);
 
             return await profile;
         }
@@ -35,27 +42,37 @@ namespace TaskHive_UserService.Repositories
             _db.SaveChanges();
         }
 
-        public StatusCodeResult AddUserProfile(UserProfileDataModel userProfile)
+        public async Task<UserProfileDataModel> AddUserProfile(UserProfileDataModel userProfile)
         {
             try
-            {
-                userProfile.LastEditDate = DateTime.Now;
+            {   
+                // get user id
+                var user = await GetUserByEmailAsync(userProfile.Email);
+                userProfile.UserId = user.Id;
+                
+                userProfile.CreateDate = DateTime.Now;
+                userProfile.LastUpdateDate = DateTime.Now;
                 _db.Add(userProfile);
                 _db.SaveChanges();
-                return new StatusCodeResult(200);
+
+                // return saved data
+                userProfile = await GetUserProfileByEmailAsync(userProfile.Email);
+                
+                return userProfile;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return new StatusCodeResult(400);
+                return null;
             }
 
         }
 
-        public StatusCodeResult EditUserProfile(UserProfileDataModel userProfile)
+       public async Task<UserProfileDataModel> EditUserProfile(UserProfileDataModel userProfile)
         {
             try
             {
+                // get current record on db
                 var data = _db.UserProfiles.First(x => x.UserId == userProfile.UserId);
 
                 if (data != null)
@@ -64,32 +81,22 @@ namespace TaskHive_UserService.Repositories
                     data.Surname = userProfile.Surname;
                     data.PhoneNumber = userProfile.PhoneNumber;
                     data.Email = userProfile.Email;
-                    data.LastEditDate = DateTime.Now;
+                    data.Department = userProfile.Department;
+                    data.Role = userProfile.Role;
+                    data.LastUpdateDate = DateTime.Now;
 
                     _db.Update(data);
                     _db.SaveChanges();
                 }
 
-                return new StatusCodeResult(200);
+                return data;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                return new StatusCodeResult(400);
+                return null;
             }
-        }
-
-        public async void DeleteUserAsync(int id)
-        {
-            var user = await _db.Users.FindAsync(id);
-
-            user.IsDeleted = true;
-            user.DeleteUser = Globals.UserId;
-            user.DeleteDate = DateTime.Now;
-
-            _db.Update(user);
-            _db.SaveChanges();
-        }
+        } 
 
         public async Task<bool> IsUserExistAsync(string email)
         {
