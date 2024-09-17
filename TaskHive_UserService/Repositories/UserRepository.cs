@@ -36,7 +36,7 @@ namespace TaskHive_UserService.Repositories
 
         public void AddUser(UserDataModel user)
         {
-            user.LogOnDate = DateTime.Now;
+            user.CreateDate = DateTime.Now;
             _db.Add(user);
             _db.SaveChanges();
         }
@@ -102,12 +102,12 @@ namespace TaskHive_UserService.Repositories
             try
             {
                 // get current record on db
-                var data = await _db.Users.FirstAsync(x => x.Id == user.Id);
+                var data = await _db.Users.FirstAsync(x => x.Id == user.UserId);
 
                 if (data != null)
                 {
                     data.Email = user.Email;
-                    //TODO: add lastupdate column here and EF.                    
+                    data.LastUpdateDate = DateTime.Now;                 
 
                     _db.Update(data);
                     await _db.SaveChangesAsync();

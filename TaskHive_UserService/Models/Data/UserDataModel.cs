@@ -11,7 +11,8 @@ namespace TaskHive_UserService.Models.Data
         [Required]
         public string PasswordSalt { get; set; } = null!;
         [Required] public string PasswordHash { get; set; } = null!;
-        public DateTime LogOnDate { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime LastUpdateDate { get; set; }
         public bool IsDeleted { get; set; } = false;
         public DateTime? DeleteDate { get; set; }
         public int DeleteUser { get; set; }
