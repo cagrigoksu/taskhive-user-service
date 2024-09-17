@@ -22,13 +22,16 @@ namespace TaskHive_UserService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TaskHive_UserService.Models.UserDataModel", b =>
+            modelBuilder.Entity("TaskHive_UserService.Models.Data.UserDataModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeleteDate")
                         .HasColumnType("datetime2");
@@ -43,7 +46,7 @@ namespace TaskHive_UserService.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LogOnDate")
+                    b.Property<DateTime>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PasswordHash")
@@ -59,7 +62,7 @@ namespace TaskHive_UserService.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TaskHive_UserService.Models.UserProfileDataModel", b =>
+            modelBuilder.Entity("TaskHive_UserService.Models.Data.UserProfileDataModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
