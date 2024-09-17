@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskHive_UserService.Models;
+using TaskHive_UserService.Models.Data;
 using TaskHive_UserService.Repositories.Interfaces;
 using TaskHive_UserService.Services.Interfaces;
 
@@ -38,15 +39,15 @@ namespace TaskHive_UserService.Services
             _userRepository.AddUser(user);
         }
 
-        public async Task<UserProfileDataModel> AddUserProfile(UserProfileDataModel profile)
+        public async Task<UserProfileDataModel> AddOrEditUserProfileAsync(UserProfileModel profile)
         {
-            var result = await _userRepository.AddUserProfile(profile);
+            var result = await _userRepository.AddOrEditUserProfileAsync(profile);
             return result;
         }
 
-        public async Task<UserProfileDataModel> EditUserProfile(UserProfileDataModel userProfile)
+        public async Task<UserDataModel> EditUserEmailAsync(UserModel user)
         {
-            var result = await _userRepository.EditUserProfile(userProfile);
+            var result = await _userRepository.EditUserEmailAsync(user);
             return result;
         }
     }

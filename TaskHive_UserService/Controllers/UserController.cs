@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TaskHive_UserService;
 using TaskHive_UserService.Models;
+using TaskHive_UserService.Models.Data;
 using TaskHive_UserService.Services.Interfaces;
 using JsonConverter = System.Text.Json.Serialization.JsonConverter;
 
@@ -95,8 +96,8 @@ namespace UserMicroservice.Controllers
             return BadRequest();
         }
 
-        [HttpGet("getUserByEmail/{email}")]
-        public async Task<IActionResult> GetUserByEmail([FromForm] string email)
+        [HttpGet("get-user-by-email/{email}")]
+        public async Task<IActionResult> GetUserByEmailAsync([FromForm] string email)
         {
             Console.WriteLine("GetUserByEmail request received.");
             var result = await _userService.GetUserByEmailAsync(email);
@@ -108,11 +109,11 @@ namespace UserMicroservice.Controllers
             return BadRequest();
         }
 
-        [HttpPost("addUserProfile")]
-        public async Task<IActionResult> AddUserProfileAsync([FromForm] UserProfileDataModel userProfile)
+        [HttpPost("add-or-edit-user-profile")]
+        public async Task<IActionResult> AddOrEditUserProfileAsync([FromForm] UserProfileModel userProfile)
         {
-            Console.WriteLine("AddUserProfile request received.");
-            var result = await _userService.AddUserProfile(userProfile);
+            Console.WriteLine("AddOrEditUserProfile request received.");
+            var result = await _userService.AddOrEditUserProfileAsync(userProfile);
 
             if (result != null)
             {
@@ -121,10 +122,10 @@ namespace UserMicroservice.Controllers
             return BadRequest();
         }
 
-        [HttpPost("editUserProfile")]
-        public async Task<IActionResult> EditUserProfileAsync([FromForm] UserProfileDataModel userProfile)
+        [HttpPost("edit-user-email")]
+        public async Task<IActionResult> EditUserEmailAsync([FromForm] UserModel user)
         {
-            var result = await _userService.EditUserProfile(userProfile);
+            var result = await _userService.EditUserEmailAsync(user);
 
             if (result != null)
             {
@@ -133,7 +134,7 @@ namespace UserMicroservice.Controllers
             return BadRequest();
         }
 
-        [HttpGet("getUserProfileByUserId/{userId}")]
+        [HttpGet("get-user-profile-by-userId/{userId}")]
         public async Task<IActionResult> GetUserProfileByUserIdAsync(int userId)
         {
             var userProfile = await _userService.GetUserProfileByUserIdAsync(userId);
