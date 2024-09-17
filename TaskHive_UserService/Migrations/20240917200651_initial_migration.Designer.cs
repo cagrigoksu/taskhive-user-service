@@ -12,8 +12,8 @@ using TaskHive_UserService;
 namespace TaskHive_UserService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240917180246_UserProfileEmailDeleted")]
-    partial class UserProfileEmailDeleted
+    [Migration("20240917200651_initial_migration")]
+    partial class initial_migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,13 +25,16 @@ namespace TaskHive_UserService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TaskHive_UserService.Models.UserDataModel", b =>
+            modelBuilder.Entity("TaskHive_UserService.Models.Data.UserDataModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeleteDate")
                         .HasColumnType("datetime2");
@@ -46,7 +49,7 @@ namespace TaskHive_UserService.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("LogOnDate")
+                    b.Property<DateTime>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PasswordHash")
@@ -62,7 +65,7 @@ namespace TaskHive_UserService.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TaskHive_UserService.Models.UserProfileDataModel", b =>
+            modelBuilder.Entity("TaskHive_UserService.Models.Data.UserProfileDataModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
