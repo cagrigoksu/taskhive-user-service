@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TaskHive_UserService.Models;
+using TaskHive_UserService.Models.Data;
 
 namespace TaskHive_UserService
 {

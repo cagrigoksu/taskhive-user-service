@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskHive_UserService.Models;
+using TaskHive_UserService.Models.Data;
 
 namespace TaskHive_UserService.Services.Interfaces
 {
@@ -7,9 +8,9 @@ namespace TaskHive_UserService.Services.Interfaces
     {
         Task<UserDataModel> GetUserByEmailAsync(string email);
         Task<bool> IsUserExistAsync(string email);
-        Task<UserProfileDataModel> GetUserProfileByUserIdAsync(int userId);
         void AddUser(UserDataModel user);
-        Task<UserProfileDataModel> AddUserProfile(UserProfileDataModel profile);
-        Task<UserProfileDataModel> EditUserProfile(UserProfileDataModel userProfile);
+        Task<UserProfileDataModel> GetUserProfileByUserIdAsync(int userId);
+        Task<UserProfileDataModel> AddOrEditUserProfileAsync(UserProfileModel profile);
+        Task<UserDataModel> EditUserEmailAsync(UserModel user);
     }
 }
