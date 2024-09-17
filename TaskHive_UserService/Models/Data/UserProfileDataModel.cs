@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TaskHive_UserService.Models
+namespace TaskHive_UserService.Models.Data
 {
     public class UserProfileDataModel
     {
@@ -9,7 +9,6 @@ namespace TaskHive_UserService.Models
         public int UserId { get; set; }
         public required string Name { get; set; }
         public required string Surname { get; set; } 
-        public required string Email { get; set; }
         public required string PhoneNumber { get; set; }
         public required string Department { get; set; }
         public required string Role { get; set; }

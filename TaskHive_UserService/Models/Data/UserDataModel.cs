@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TaskHive_UserService.Models
+namespace TaskHive_UserService.Models.Data
 {
     public class UserDataModel
     {
