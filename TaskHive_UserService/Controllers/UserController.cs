@@ -25,7 +25,7 @@ namespace UserMicroservice.Controllers
 
         [HttpPost("login")]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([FromForm] LoginModel loginModel)
+        public async Task<IActionResult> Login(LoginModel loginModel)
         {
             //System.Diagnostics.Debug.WriteLine("XXX");
             Console.WriteLine("Login request received.");
@@ -56,7 +56,7 @@ namespace UserMicroservice.Controllers
         }
         
         [HttpPost("logon")]
-        public async Task<IActionResult> Logon([FromForm] LogonModel logonModel)
+        public async Task<IActionResult> Logon(LogonModel logonModel)
         {
             Console.WriteLine("Logon request received.");
             
@@ -97,20 +97,23 @@ namespace UserMicroservice.Controllers
         }
 
         [HttpGet("get-user-by-email/{email}")]
-        public async Task<IActionResult> GetUserByEmailAsync([FromForm] string email)
+        public async Task<IActionResult> GetUserByEmailAsync(string email)
         {
             Console.WriteLine("GetUserByEmail request received.");
             var result = await _userService.GetUserByEmailAsync(email);
 
+            result.PasswordHash = null;
+            result.PasswordSalt = null;
+
             if (result != null)
             {
-                return Ok();
+                return Ok(result);
             }
             return BadRequest();
         }
 
         [HttpPost("add-or-edit-user-profile")]
-        public async Task<IActionResult> AddOrEditUserProfileAsync([FromForm] UserProfileModel userProfile)
+        public async Task<IActionResult> AddOrEditUserProfileAsync(UserProfileModel userProfile)
         {
             Console.WriteLine("AddOrEditUserProfile request received.");
             var result = await _userService.AddOrEditUserProfileAsync(userProfile);
@@ -123,7 +126,7 @@ namespace UserMicroservice.Controllers
         }
 
         [HttpPost("edit-user-email")]
-        public async Task<IActionResult> EditUserEmailAsync([FromForm] UserModel user)
+        public async Task<IActionResult> EditUserEmailAsync(UserModel user)
         {
             var result = await _userService.EditUserEmailAsync(user);
 
