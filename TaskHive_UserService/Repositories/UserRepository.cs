@@ -102,7 +102,7 @@ namespace TaskHive_UserService.Repositories
             try
             {
                 // get current record on db
-                var data = await _db.Users.FirstAsync(x => x.Id == user.UserId);
+                var data = await _db.Users.FirstAsync(x => x.Id == user.Id);
 
                 if (data != null)
                 {
