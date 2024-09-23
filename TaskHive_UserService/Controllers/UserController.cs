@@ -25,7 +25,7 @@ namespace UserMicroservice.Controllers
 
         [HttpPost("login")]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> LogIn([FromForm] LoginModel loginModel)
+        public async Task<IActionResult> Login([FromForm] LoginModel loginModel)
         {
             //System.Diagnostics.Debug.WriteLine("XXX");
             Console.WriteLine("Login request received.");
@@ -56,7 +56,7 @@ namespace UserMicroservice.Controllers
         }
         
         [HttpPost("logon")]
-        public async Task<IActionResult> LogOn([FromForm] LogonModel logonModel)
+        public async Task<IActionResult> Logon([FromForm] LogonModel logonModel)
         {
             Console.WriteLine("Logon request received.");
             

@@ -10,8 +10,8 @@ namespace TaskHive_UserService.Models.Data
         public required string Name { get; set; }
         public required string Surname { get; set; } 
         public required string PhoneNumber { get; set; }
-        public required string Department { get; set; }
-        public required string Role { get; set; }
+        public required int Department { get; set; }
+        public required int Role { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime LastUpdateDate { get; set; }
         public bool IsDeleted { get; set; } = false;
