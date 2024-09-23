@@ -17,9 +17,9 @@ namespace TaskHive_UserService.Repositories
 
         public async Task<UserDataModel> GetUserByEmailAsync(string email)
         {
-            var user = _db.Users.FirstOrDefaultAsync(x => x.Email == email && x.IsDeleted == false);
+            var user = await _db.Users.FirstOrDefaultAsync(x => x.Email == email && x.IsDeleted == false);
 
-            return await user;
+            return user;
         }
 
         public async Task<UserDataModel> GetUserByUserIdAsync(int userId){
@@ -113,6 +113,8 @@ namespace TaskHive_UserService.Repositories
                     await _db.SaveChangesAsync();
                 }
 
+                data.PasswordHash = null;
+                data.PasswordSalt = null;
                 return data;
             }
             catch (Exception e)
