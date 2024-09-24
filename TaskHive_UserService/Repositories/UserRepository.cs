@@ -17,9 +17,9 @@ namespace TaskHive_UserService.Repositories
 
         public async Task<UserDataModel> GetUserByEmailAsync(string email)
         {
-            var user = _db.Users.FirstOrDefaultAsync(x => x.Email == email && x.IsDeleted == false);
+            var user = await _db.Users.FirstOrDefaultAsync(x => x.Email == email && x.IsDeleted == false);
 
-            return await user;
+            return user;
         }
 
         public async Task<UserDataModel> GetUserByUserIdAsync(int userId){
@@ -53,8 +53,8 @@ namespace TaskHive_UserService.Repositories
                     currentUserProfile.Name = userProfile.Name;
                     currentUserProfile.Surname = userProfile.Surname;
                     currentUserProfile.PhoneNumber = userProfile.PhoneNumber;
-                    currentUserProfile.Department = userProfile.Department;
-                    currentUserProfile.Role = userProfile.Role;
+                    currentUserProfile.DepartmentId = userProfile.DepartmentId;
+                    currentUserProfile.RoleId = userProfile.RoleId;
 
                     currentUserProfile.LastUpdateDate = DateTime.Now;
                     _db.Update(currentUserProfile);
@@ -74,8 +74,8 @@ namespace TaskHive_UserService.Repositories
                         Name = userProfile.Name,
                         Surname = userProfile.Surname,
                         PhoneNumber = userProfile.PhoneNumber,
-                        Department = userProfile.Department,
-                        Role = userProfile.Role,
+                        DepartmentId = userProfile.DepartmentId,
+                        RoleId = userProfile.RoleId,
                         CreateDate = DateTime.Now,
                         LastUpdateDate = DateTime.Now
                     };
@@ -102,7 +102,7 @@ namespace TaskHive_UserService.Repositories
             try
             {
                 // get current record on db
-                var data = await _db.Users.FirstAsync(x => x.Id == user.UserId);
+                var data = await _db.Users.FirstAsync(x => x.Id == user.Id);
 
                 if (data != null)
                 {
@@ -113,6 +113,8 @@ namespace TaskHive_UserService.Repositories
                     await _db.SaveChangesAsync();
                 }
 
+                data.PasswordHash = null;
+                data.PasswordSalt = null;
                 return data;
             }
             catch (Exception e)
